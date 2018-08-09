@@ -5,7 +5,7 @@ const {mongoose} = require('./db/mongoose');
 const {Todo} = require('./models/todo');
 const {User} = require('./models/user');
 
-const appPort = 3000;
+const appPort = 4567;
 const app = express();
 
 app.use(bodyParser.json());
@@ -25,3 +25,5 @@ app.post('/todos',(req,res)=> {
 app.listen(appPort, () => {
     console.log(`Server started on port: ${appPort}`);
 });
+
+module.exports = {app};
