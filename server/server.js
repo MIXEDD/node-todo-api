@@ -6,7 +6,7 @@ const {Todo} = require('./models/todo');
 const {User} = require('./models/user');
 const {ObjectID} = require('mongodb');
 
-const appPort = 3000;
+const appPort = process.env.PORT || 3000;
 const app = express();
 
 app.use(bodyParser.json());
@@ -44,6 +44,18 @@ app.get('/todos/:id',(req,res) => {
     }
 });
 
+app.delete('/todos/:id',(req,res) => {
+    const id = req.params.id;
+    if(!ObjectID.isValid(id)){
+        res.status(404).send('No such ID');
+    } else {
+        Todo.findByIdAndRemove(id).then(todo => {
+            res.send({todo});
+        }, (e) => {
+            res.status(400).send(e);
+        });
+    }
+});
 
 app.listen(appPort, () => {
     console.log(`Server started on port: ${appPort}`);
