@@ -35,8 +35,9 @@ app.get('/todos/:id',(req,res) => {
     if(!ObjectID.isValid(id)){
         res.status(404).send('No such ID');
     } else {
-        User.findById(id).then(user => {
-            res.send({user});
+        Todo.findById(id).then(todo => {
+
+            res.send({todo});
         }, (e) => {
             res.status(400).send(e);
         });
